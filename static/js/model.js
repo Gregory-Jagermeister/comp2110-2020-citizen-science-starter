@@ -12,7 +12,7 @@ export {Model};
 const Model = {
 
     observations_url: '/api/observations', 
-    users_url:  '/api/users',   
+    users_url:  '/api/users',
     
     // this will hold the data stored in the model
     data: {
@@ -25,7 +25,17 @@ const Model = {
     // when the request is resolved, creates a "modelUpdated" event 
     // with the model as the event detail
     update_users: function() {
-        
+        fetch(this.users_url)
+            .then(response => response.json())
+            .then(data => {
+
+                this.data.users = data;
+                var event = new CustomEvent('modelUpdated', {
+                    detail: this
+                });
+                window.dispatchEvent(event);
+
+            });
     },
 
     // update_observations - retrieve the latest list of observations
@@ -33,7 +43,17 @@ const Model = {
     // when the request is resolved, creates a "modelUpdated" event 
     // with the model as the event detail
     update_observations: function() {
-        
+        fetch(this.observations_url)
+            .then(response => response.json())
+            .then(data => {
+
+                this.data.observations = data;
+                var event = new CustomEvent('modelUpdated', {
+                    detail: this
+                });
+                window.dispatchEvent(event);
+
+            });
     },
 
     // get_observations - return an array of observation objects
@@ -43,7 +63,17 @@ const Model = {
 
     // get_observation - return a single observation given its id
     get_observation: function(observationid) {
-        
+        var returnedel;
+        this.data.users.forEach(function(element){
+            var x = element.id;
+            if(x == observationid){
+                returnedel = element;
+            }else{
+                returnedel = null;
+            }
+        })
+
+        return returnedel;
     },
  
     set_observations: function(observations) {
@@ -56,6 +86,20 @@ const Model = {
     // when the request is resolved, creates an "observationAdded" event
     //  with the response from the server as the detail
     add_observation: function(formdata) {
+        fetch(this.observations_url, {
+            body:formdata,
+            method:"POST"
+        })
+        .then((response) => {
+            return response.json();
+        })
+        .then((data) => {
+            console.log(data);
+            var event = new CustomEvent('observationAdded', {
+                detail: data
+            })
+            window.dispatchEvent(event);
+        })
 
     },
 
@@ -63,11 +107,39 @@ const Model = {
     //   one user as an array
     get_user_observations: function(userid) {
 
+        var arr = [];
+        this.data.observations.forEach(function(element){
+            var x = element.participant;
+            if(x == userid){
+                arr.push(element);
+            }
+            
+        })
+
+        arr.sort(function(a, b){
+            if (a.timestamp < b.timestamp) {return 1;}
+            if (a.timestamp > b.timestamp) {return -1;}
+            return 0;
+        });
+        return arr;
     },
 
     // get_recent_observations - return the N most recent
     //  observations, ordered by timestamp, most recent first
     get_recent_observations: function(N) {
+        var recentObs = [];
+        var allObs = this.data.observations.sort(function(a, b){
+            if (a.timestamp < b.timestamp) {return 1;}
+            if (a.timestamp > b.timestamp) {return -1;}
+            return 0;
+        });
+
+        for (let index = 0; index < N; index++) {
+            recentObs.push(allObs[index]);
+        }
+
+        return recentObs;
+        
 
     },
 
@@ -88,6 +160,17 @@ const Model = {
     //    the user id
     get_user: function(userid) {
 
+        var returnedel;
+        this.data.users.forEach(function(element){
+            var x = element.id;
+            if(x == userid){
+                returnedel = element;
+            }else{
+                returnedel = null;
+            }
+        })
+
+        return returnedel;
     }
 
 };
