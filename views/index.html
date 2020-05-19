@@ -36,6 +36,15 @@
           <div id="target"></div>
 
       </div>
+
+      <aside>
+        <h2>Recent Observations</h2>
+        <div id="recentObs"></div>
+
+        <h2>Top Ten Users</h2>
+        <div id="topUsers"></div>
+      </aside>
+
     </div>
 
   <footer>
@@ -59,6 +68,25 @@
 
 
   <!-- Templates -->
+
+  <script id="observationsRecent" type="text/x-handlebars-template">
+    <ol>
+      {{#each observation}}
+      <li>
+        <a href="/#!/observations/{{id}}">Observation #{{id}}</a>
+      </li>
+      {{/each}}
+    </ol>
+  </script>
+  <script id="userList" type="text/x-handlebars-template">
+    <ol>
+      {{#each user}}
+      <li>
+        <a href="/#!/users/{{id}}">{{first_name}}, {{last_name}}</a>
+      </li>
+      {{/each}}
+    </ol>
+  </script>
 
   </body>
 </html>

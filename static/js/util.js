@@ -1,4 +1,4 @@
-export {split_hash};
+export {split_hash, getTopTen};
 
 // split_hash - given a hash path like "#!/observations/2" 
 //   return an object with properties `path` ("observations") and `id` (2)
@@ -14,4 +14,15 @@ function split_hash(hash) {
     } else {
         return { path: "" }
     }
+}
+
+function getTopTen(users){
+    var recentObs = [];
+    
+
+    for (let index = 0; index < N; index++) {
+        recentObs.push(allObs[index]);
+    }
+
+    return recentObs;
 }

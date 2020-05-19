@@ -46,7 +46,6 @@ const Model = {
         fetch(this.observations_url)
             .then(response => response.json())
             .then(data => {
-
                 this.data.observations = data;
                 var event = new CustomEvent('modelUpdated', {
                     detail: this
@@ -149,6 +148,12 @@ const Model = {
     // get_users - return the array of users
     get_users: function() {
         return this.data.users;
+    },
+
+    get_Top_Ten: function(){
+        let ttu = [];
+        
+
     },
 
     // set_users - set the array of users

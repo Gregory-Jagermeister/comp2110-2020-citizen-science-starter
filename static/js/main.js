@@ -1,4 +1,5 @@
 import { Model } from "./model.js";
+import { displayObservations } from "./views.js";
 
 function redraw() { 
 
@@ -11,9 +12,20 @@ function redraw() {
 
     // update the page
     document.getElementById("target").innerHTML = content;
+
+    Model.update_observations();
     Model.update_users();
-    Model.get_user_observations(87); 
+
+    
+
 }
+
+window.addEventListener("modelUpdated", function(e) {
+
+    let recentObsdata = Model.get_recent_observations(10);
+    displayObservations("recentObs", recentObsdata); 
+    
+});
 
 window.onload = function() {
     redraw();
