@@ -88,7 +88,6 @@ describe('Model API Requests', function(){
                 done();
             }
             window.addEventListener("observationAdded", handler);
-
             Model.add_observation(formData);
         });
 

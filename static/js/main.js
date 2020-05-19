@@ -1,3 +1,4 @@
+import { Model } from "./model.js";
 
 function redraw() { 
 
@@ -10,6 +11,8 @@ function redraw() {
 
     // update the page
     document.getElementById("target").innerHTML = content;
+    Model.update_users();
+    Model.get_user_observations(87); 
 }
 
 window.onload = function() {
