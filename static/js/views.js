@@ -1,7 +1,22 @@
-export { displayObservations, displayTopTenUsers, displayListView };
-import { split_hash } from "./util.js";
+export {
+  displayObservations,
+  displayTopTenUsers,
+  displayListView,
+  displayDetailView,
+};
+import { split_hash, copy } from "./util.js";
 
 function applyTemplate(targetid, templateid, data) {
+  //<<PARTIAL TEMPLATES>>//
+  Handlebars.registerPartial(
+    "recentObs",
+    document.getElementById("observationsRecent").innerHTML
+  );
+  Handlebars.registerPartial(
+    "topTen",
+    document.getElementById("userList").innerHTML
+  );
+
   //Modified Stackoverflowv Code from https://stackoverflow.com/questions/13627308/add-st-nd-rd-and-th-ordinal-suffix-to-a-number
   Handlebars.registerHelper("counter", function (index) {
     let i = index + 1;
@@ -19,6 +34,10 @@ function applyTemplate(targetid, templateid, data) {
     return i + "th";
   });
 
+  Handlebars.registerHelper("datetime", function (date) {
+    return new Date(date).toDateString();
+  });
+
   let target = document.getElementById(targetid);
 
   let template = Handlebars.compile(
@@ -27,8 +46,10 @@ function applyTemplate(targetid, templateid, data) {
   target.innerHTML = template(data);
 }
 
-function displayObservations(targetid, data) {
-  applyTemplate(targetid, "observationsRecent", { observation: data });
+function displayObservations(targetid, obData, userData) {
+  let data = obData.concat(userData);
+  console.log(data);
+  applyTemplate(targetid, "HomePage", { content: data });
 }
 
 function displayTopTenUsers(targetid, data) {
@@ -43,4 +64,8 @@ function displayListView(targetid, data) {
   } else if (pathObj.path === "observations") {
     applyTemplate(targetid, "listobscontent", { content: data });
   }
+}
+
+function displayDetailView(targetid, data) {
+  applyTemplate(targetid, "obsdetailed", data);
 }

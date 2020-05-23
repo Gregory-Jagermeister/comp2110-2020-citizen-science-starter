@@ -44,6 +44,7 @@ const Model = {
       .then((response) => response.json())
       .then((data) => {
         this.data.observations = data;
+
         var event = new CustomEvent("modelUpdated", {
           detail: this,
         });
@@ -58,17 +59,13 @@ const Model = {
 
   // get_observation - return a single observation given its id
   get_observation: function (observationid) {
-    var returnedel;
-    this.data.users.forEach(function (element) {
-      var x = element.id;
-      if (x == observationid) {
-        returnedel = element;
-      } else {
-        returnedel = null;
+    for (let i = 0; i < this.data.observations.length; i++) {
+      var x = this.data.observations[i];
+      if (x.id == observationid) {
+        return x;
       }
-    });
-
-    return returnedel;
+    }
+    return null;
   },
 
   set_observations: function (observations) {
@@ -124,7 +121,8 @@ const Model = {
   //  observations, ordered by timestamp, most recent first
   get_recent_observations: function (N) {
     var recentObs = [];
-    var allObs = this.data.observations.sort(function (a, b) {
+    var allObs = [...this.data.observations];
+    allObs.sort(function (a, b) {
       if (a.timestamp < b.timestamp) {
         return 1;
       }
@@ -175,11 +173,14 @@ const Model = {
 
   get_topTen: function () {
     let lboard = this.get_Leaderboard();
-    let ttu = [];
-    for (let index = 0; index < 10; index++) {
-      ttu[index] = lboard[index];
-    }
-    return ttu;
+
+    //this is what happens when you decide F**k it i'll do it the dumb way
+    // let ttu = [];
+    // for (let index = 0; index < 10; index++) {
+    //   ttu[index] = lboard[index];
+    // }
+
+    return lboard.slice(0, 10);
   },
 
   // set_users - set the array of users
@@ -190,16 +191,22 @@ const Model = {
   // get_user - return the details of a single user given
   //    the user id
   get_user: function (userid) {
-    var returnedel;
-    this.data.users.forEach(function (element) {
-      var x = element.id;
-      if (x == userid) {
-        returnedel = element;
-      } else {
-        returnedel = null;
-      }
-    });
+    // That Moment you work out that forEach loops always return undefined or null
+    // this.data.users.forEach((element) => {
+    //   var x = element;
+    //   if (x.id == userid) {
+    //     returnedel = x;
+    //   } else {
+    //     returnedel = null;
+    //   }
+    // });
 
-    return returnedel;
+    for (let i = 0; i < this.data.users.length; i++) {
+      var x = this.data.users[i];
+      if (x.id == userid) {
+        return x;
+      }
+    }
+    return null;
   },
 };

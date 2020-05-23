@@ -34,12 +34,6 @@
       </div>
 
       <div id="othercontent"></div>
-
-      <aside>
-        <div id="recentObs"></div>
-
-        <div id="topUsers"></div>
-      </aside>
     </div>
 
     <footer>
@@ -70,7 +64,7 @@
         <h2>
           Recent Observations
         </h2>
-        {{#each observation}}
+        {{#each content}}
           <li>
             <a href="/#!/observations/{{id}}">
               Observation #{{id}}
@@ -84,7 +78,7 @@
         <h2>
           Top Ten Users
         </h2>
-        {{#each user}}
+        {{#each content}}
           <li>
             <a href="/#!/users/{{id}}">
               {{first_name}}, {{last_name}}
@@ -95,7 +89,7 @@
     </script>
     <script id="listusercontent" type="text/x-handlebars-template">
       <h2>
-        User Leaderboard
+        Users
       </h2>
       <table>
         <tr>
@@ -119,6 +113,104 @@
           </tr>
         {{/each}}
       </table>
+    </script>
+    <script id="listobscontent" type="text/x-handlebars-template">
+      <h2>
+        All Observations
+      </h2>
+      <table>
+        <tr>
+          <th>
+            Location & Weather
+          </th>
+          <th>
+            Observation Number
+          </th>
+        </tr>
+        {{#each content}}
+          <tr>
+            <td>
+              <a href="/#!/observations/{{id}}">
+                {{location}}, {{weather}}
+              </a>
+            </td>
+            <td>
+              Observation #{{id}}
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    </script>
+    <script id="obsdetailed" type="text/x-handlebars-template">
+      <a href="/#!/observations/">
+        < Back</a>
+      <h2>
+        Observation #{{id}} posted on {{datetime timestamp}}
+      </h2>
+      <P>
+        Below is the details of this observation
+      </P>
+      <ul>
+        <li>
+          <p>
+            Participant Id: {{participant}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Temperature: {{temperature}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Weather: {{weather}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Wind: {{wind}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Location: {{location}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Height: {{height}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Girth: {{girth}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Leaf Size: {{leaf_size}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Leaf Shape: {{leaf_shape}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Bark Colour: {{bark_colour}}
+          </p>
+        </li>
+        <li>
+          <p>
+            Bark Texture: {{bark_texture}}
+          </p>
+        </li>
+      </ul>
+    </script>
+    <script id="HomePage" type="text/x-handlebars-template">
+      {{> recentObs}}
+      {{> topTen}}
     </script>
   </body>
 </html>
