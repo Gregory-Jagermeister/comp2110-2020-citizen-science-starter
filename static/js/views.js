@@ -1,5 +1,11 @@
-export { displayObservations, displayForm, displayListView, displayDetailView };
-import { split_hash, copy } from "./util.js";
+export {
+  displayObservations,
+  displayFormError,
+  displayForm,
+  displayListView,
+  displayDetailView,
+};
+import { split_hash } from "./util.js";
 
 function applyTemplate(targetid, templateid, data) {
   //<<PARTIAL TEMPLATES>>//
@@ -66,4 +72,8 @@ function displayDetailView(targetid, data) {
   } else if (pathObj.path === "observations") {
     applyTemplate(targetid, "obsdetailed", data);
   }
+}
+
+function displayFormError(targetid, data) {
+  applyTemplate(targetid, "formerror", data);
 }

@@ -4,6 +4,7 @@ import {
   displayListView,
   displayDetailView,
   displayForm,
+  displayFormError,
 } from "./views.js";
 import { split_hash, copy } from "./util.js";
 
@@ -28,6 +29,13 @@ window.addEventListener("modelUpdated", function (e) {
   // user.
   if (currentHash.path === "submit") {
     displayForm("othercontent");
+    let form = document.getElementById("submitForm");
+    form.onsubmit = function () {
+      console.log(form);
+      let newob = new FormData(form);
+      Model.add_observation(newob);
+      return false;
+    };
   } else if (currentHash.path === "users") {
     displayListView("othercontent", users);
 
@@ -56,6 +64,14 @@ window.addEventListener("modelUpdated", function (e) {
     //displays the homepage.
   } else {
     displayObservations("othercontent", recentObsdata, toptenUsers);
+  }
+});
+
+window.addEventListener("observationAdded", function (e) {
+  if (e.detail.status === "success") {
+    window.location.href = "/#!/users/0";
+  } else {
+    displayFormError("othercontent", e.detail.errors);
   }
 });
 
