@@ -1,9 +1,4 @@
-export {
-  displayObservations,
-  displayTopTenUsers,
-  displayListView,
-  displayDetailView,
-};
+export { displayObservations, displayForm, displayListView, displayDetailView };
 import { split_hash, copy } from "./util.js";
 
 function applyTemplate(targetid, templateid, data) {
@@ -39,7 +34,6 @@ function applyTemplate(targetid, templateid, data) {
   });
 
   let target = document.getElementById(targetid);
-
   let template = Handlebars.compile(
     document.getElementById(templateid).textContent
   );
@@ -47,13 +41,11 @@ function applyTemplate(targetid, templateid, data) {
 }
 
 function displayObservations(targetid, obData, userData) {
-  let data = obData.concat(userData);
-  console.log(data);
-  applyTemplate(targetid, "HomePage", { content: data });
+  applyTemplate(targetid, "HomePage", { obData, userData });
 }
 
-function displayTopTenUsers(targetid, data) {
-  applyTemplate(targetid, "userList", { user: data });
+function displayForm(targetid) {
+  applyTemplate(targetid, "form", null);
 }
 
 function displayListView(targetid, data) {
@@ -67,5 +59,11 @@ function displayListView(targetid, data) {
 }
 
 function displayDetailView(targetid, data) {
-  applyTemplate(targetid, "obsdetailed", data);
+  let pathObj = split_hash(window.location.hash);
+
+  if (pathObj.path === "users") {
+    applyTemplate(targetid, "usdetailed", data);
+  } else if (pathObj.path === "observations") {
+    applyTemplate(targetid, "obsdetailed", data);
+  }
 }

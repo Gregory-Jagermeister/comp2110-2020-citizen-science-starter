@@ -64,7 +64,7 @@
         <h2>
           Recent Observations
         </h2>
-        {{#each content}}
+        {{#each obData}}
           <li>
             <a href="/#!/observations/{{id}}">
               Observation #{{id}}
@@ -78,7 +78,7 @@
         <h2>
           Top Ten Users
         </h2>
-        {{#each content}}
+        {{#each userData}}
           <li>
             <a href="/#!/users/{{id}}">
               {{first_name}}, {{last_name}}
@@ -142,8 +142,8 @@
       </table>
     </script>
     <script id="obsdetailed" type="text/x-handlebars-template">
-      <a href="/#!/observations/">
-        < Back</a>
+      <a href="javascript: history.go(-1)">
+        < Back To Previous Page</a>
       <h2>
         Observation #{{id}} posted on {{datetime timestamp}}
       </h2>
@@ -211,6 +211,161 @@
     <script id="HomePage" type="text/x-handlebars-template">
       {{> recentObs}}
       {{> topTen}}
+    </script>
+    <script id="usdetailed" type="text/x-handlebars-template">
+      <a href="javascript: history.go(-1)">
+        < Back To Previous Page
+      </a>
+      <h2>
+        Details on {{first_name}}, {{last_name}}
+      </h2>
+      <P>
+        Below is the User Details
+      </P>
+      <p>
+        <img src="{{avatar}}">
+      </p>
+      <h3>
+        Recent User's Observations
+      </h3>
+      <table>
+        <tr>
+          <th>
+            Location & Weather
+          </th>
+          <th>
+            Observation Number
+          </th>
+        </tr>
+        {{#each observations}}
+          <tr>
+            <td>
+              <a href="/#!/observations/{{id}}">
+                {{location}}, {{weather}}
+              </a>
+            </td>
+            <td>
+              Observation #{{id}}
+            </td>
+          </tr>
+        {{/each}}
+      </table>
+    </script>
+    <script id="form" type="text/x-handlebars-template">
+      <form>
+        <label for="temp">
+          Temperature:
+        </label>
+        <input type="number" id="temp" name="temperature" min="0" />
+        <label for="weather">
+          Weather:
+        </label>
+        <select id="weather" name="weather">
+          <option value="fine" selected>
+            Fine
+          </option>
+          <option value="raining">
+            Raining
+          </option>
+          <option value="sunny">
+            Sunny
+          </option>
+          <option value="stormy">
+            Stormy
+          </option>
+        </select>
+        <label for="wind">
+          Wind:
+        </label>
+        <select id="wind" name="wind">
+          <option value="none" selected>
+            None
+          </option>
+          <option value="light">
+            Light
+          </option>
+          <option value="medium">
+            Medium
+          </option>
+          <option value="strong">
+            Strong
+          </option>
+        </select>
+        <label for="location">
+          Location:
+        </label>
+        <input id="location" type="text" name="location" />
+        <label for="height">
+          Height:
+        </label>
+        <input type="number" id="height" name="height" min="0" />
+        <label for="girth">
+          Girth:
+        </label>
+        <input type="number" id="girth" name="girth" min="0" />
+        <label for="leaf_size">
+          Leaf Size:
+        </label>
+        <select id="leaf_size" name="leaf_size">
+          <option value="small" selected>
+            Small
+          </option>
+          <option value="<medium>">
+            Medium
+          </option>
+          <option value="large">
+            Large
+          </option>
+        </select>
+        <label for="leaf_shape">
+          Leaf Shape:
+        </label>
+        <select id="leaf_shape" name="leaf_shape">
+          <option value="rounded" selected>
+            Rounded
+          </option>
+          <option value="pointy">
+            Pointy
+          </option>
+          <option value="divided">
+            Divided
+          </option>
+          <label for="bark_colour">
+            Bark Colour:
+          </label>
+          <select id="bark_colour" name="bark_colour">
+            <option value="none" selected>
+              None
+            </option>
+            <option value="light">
+              Light
+            </option>
+            <option value="medium">
+              Medium
+            </option>
+            <option value="strong">
+              Strong
+            </option>
+          </select>
+          <label for="bark_texture">
+            Bark Texture:
+          </label>
+          <select id="wind" name="wind">
+            <option value="none" selected>
+              None
+            </option>
+            <option value="light">
+              Light
+            </option>
+            <option value="medium">
+              Medium
+            </option>
+            <option value="strong">
+              Strong
+            </option>
+          </select>
+        </select>
+      </form>
     </script>
   </body>
 </html>
