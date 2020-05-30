@@ -13,14 +13,16 @@
   <body>
     <header>
       <div id="logo"></div>
-      <nav>
+      <nav id="menu">
         <ul>
+          <li><a id="closeButt" style="cursor: pointer;">&times;</a></li>
           <li><a href="#">Home</a></li>
           <li><a href="#!/users">Users</a></li>
           <li><a href="#!/observations">Observations</a></li>
           <li><a href="#!/submit">Submit an observation</a></li>
         </ul>
       </nav>
+      <span id="menu-butt" style="cursor: pointer;">&#9776;</span>
     </header>
 
     <div id="content">
@@ -28,14 +30,19 @@
         <hgroup>
           <h1>Citizen Science</h1>
           <h2>Understanding Our Trees</h2>
+          <p>
+            Although you may think that most Australian trees are Eucalypts, in
+            fact there are a wide variety of species native to this continent.
+            The goal of this project is to help understand the diversity of the
+            population of trees and their distribution across Australia. Citizen
+            Scientists can help by recording observations of trees via this
+            website.
+          </p>
         </hgroup>
-
-        <div id="target"></div>
       </div>
-
       <div id="othercontent"></div>
+      <aside id="detail"><div id="detailinside"></div></aside>
     </div>
-
     <footer>
       <div id="social">
         <ul>
@@ -44,13 +51,11 @@
           <li id="social-instagram"><a href="#">Instagram</a></li>
         </ul>
       </div>
-
       <ul class="footer-tos">
         <li><a href="#">Terms</a></li>
         <li><a href="#">Privacy</a></li>
         <li><a href="#">Cookies</a></li>
       </ul>
-
       <p id="copyright">
         All content and images subject to copyright &copy; COMP2110 Citizen
         Science 2020.
@@ -73,6 +78,7 @@
         {{/each}}
       </ol>
     </script>
+
     <script id="userList" type="text/x-handlebars-template">
       <ol>
         <h2>
@@ -87,6 +93,7 @@
         {{/each}}
       </ol>
     </script>
+
     <script id="listusercontent" type="text/x-handlebars-template">
       <h2>
         Users
@@ -114,6 +121,7 @@
         {{/each}}
       </table>
     </script>
+
     <script id="listobscontent" type="text/x-handlebars-template">
       <h2>
         All Observations
@@ -141,9 +149,8 @@
         {{/each}}
       </table>
     </script>
+
     <script id="obsdetailed" type="text/x-handlebars-template">
-      <a href="javascript: history.go(-1)">
-        < Back To Previous Page</a>
       <h2>
         Observation #{{id}} posted on {{datetime timestamp}}
       </h2>
@@ -208,14 +215,13 @@
         </li>
       </ul>
     </script>
+
     <script id="HomePage" type="text/x-handlebars-template">
       {{> recentObs}}
       {{> topTen}}
     </script>
+
     <script id="usdetailed" type="text/x-handlebars-template">
-      <a href="javascript: history.go(-1)">
-        < Back To Previous Page
-      </a>
       <h2>
         Details on {{first_name}} {{last_name}}
       </h2>
@@ -223,7 +229,7 @@
         Below is the User Details
       </P>
       <p>
-        <img src="{{avatar}}">
+        <img src="{{avatar}}" />
       </p>
       <h3>
         Recent User's Observations
@@ -251,127 +257,175 @@
         {{/each}}
       </table>
     </script>
+
     <script id="form" type="text/x-handlebars-template">
       <form id="submitForm">
-        <input type="hidden" id="participant" name="participant" value="0" />
-        <label for="temp">
-          Temperature:
-        </label>
-        <input type="number" id="temp" name="temperature" min="0" />
-        <label for="weather">
-          Weather:
-        </label>
-        <select id="weather" name="weather">
-          <option value="fine" selected>
-            Fine
-          </option>
-          <option value="raining">
-            Raining
-          </option>
-          <option value="sunny">
-            Sunny
-          </option>
-          <option value="stormy">
-            Stormy
-          </option>
-        </select>
-        <label for="wind">
-          Wind:
-        </label>
-        <select id="wind" name="wind">
-          <option value="none" selected>
-            None
-          </option>
-          <option value="light">
-            Light
-          </option>
-          <option value="medium">
-            Medium
-          </option>
-          <option value="strong">
-            Strong
-          </option>
-        </select>
-        <label for="location">
-          Location:
-        </label>
-        <input id="location" type="text" name="location" />
-        <label for="height">
-          Height:
-        </label>
-        <input type="number" id="height" name="height" min="0" step="0.1" />
-        <label for="girth">
-          Girth:
-        </label>
-        <input type="number" id="girth" name="girth" min="0" step="0.1" />
-        <label for="leaf_size">
-          Leaf Size:
-        </label>
-        <select id="leaf_size" name="leaf_size">
-          <option value="small" selected>
-            Small
-          </option>
-          <option value="<medium>">
-            Medium
-          </option>
-          <option value="large">
-            Large
-          </option>
-        </select>
-        <label for="leaf_shape">
-          Leaf Shape:
-        </label>
-        <select id="leaf_shape" name="leaf_shape">
-          <option value="rounded" selected>
-            Rounded
-          </option>
-          <option value="pointy">
-            Pointy
-          </option>
-          <option value="divided">
-            Divided
-          </option>
-        </select>
-        <label for="bark_colour">
-          Bark Colour:
-        </label>
-        <select id="bark_colour" name="bark_colour">
-          <option value="grey" selected>
-            Grey
-          </option>
-          <option value="red">
-            Red
-          </option>
-          <option value="silver">
-            Silver
-          </option>
-          <option value="Brown">
-            Brown
-          </option>
-        </select>
-        <label for="bark_texture">
-          Bark Texture:
-        </label>
-        <select id="bark_texture" name="bark_texture">
-          <option value="smooth" selected>
-            Smooth
-          </option>
-          <option value="peeling">
-            Peeling
-          </option>
-          <option value="crinkles">
-            Crinkles
-          </option>
-          <option value="furry">
-            Furry
-          </option>
-          <option value="spotty">
-            Spotty
-          </option>
-        </select>
-        <input type="submit" />
+        <h2>
+          Submit an Observation
+        </h2>
+        <div id="formdiv">
+          <input type="hidden" id="participant" name="participant" value="0" />
+          <div id="tempdiv">
+            <label for="temp">
+              Temperature:
+            </label>
+            <br />
+            <input type="number" id="temp" name="temperature" min="0" />
+            <br />
+          </div>
+          <div id="weatherdiv">
+            <label for="weather">
+              Weather:
+            </label>
+            <br />
+            <select id="weather" name="weather">
+              <option value="fine" selected>
+                Fine
+              </option>
+              <option value="raining">
+                Raining
+              </option>
+              <option value="sunny">
+                Sunny
+              </option>
+              <option value="stormy">
+                Stormy
+              </option>
+            </select>
+            <br />
+          </div>
+          <div id="winddiv">
+            <label for="wind">
+              Wind:
+            </label>
+            <br />
+            <select id="wind" name="wind">
+              <option value="none" selected>
+                None
+              </option>
+              <option value="light">
+                Light
+              </option>
+              <option value="medium">
+                Medium
+              </option>
+              <option value="strong">
+                Strong
+              </option>
+            </select>
+            <br />
+          </div>
+          <div id="locationdiv">
+            <label for="location">
+              Location:
+            </label>
+            <br />
+            <input id="location" type="text" name="location" />
+            <br />
+          </div>
+          <div id="heightdiv">
+            <label for="height">
+              Height:
+            </label>
+            <br />
+            <input type="number" id="height" name="height" min="0" step="0.1" />
+            <br />
+          </div>
+          <div id="girthdiv">
+            <label for="girth">
+              Girth:
+            </label>
+            <br />
+            <input type="number" id="girth" name="girth" min="0" step="0.1" />
+            <br />
+          </div>
+          <div id="leafsizediv">
+            <label for="leaf_size">
+              Leaf Size:
+            </label>
+            <br />
+            <select id="leaf_size" name="leaf_size">
+              <option value="small" selected>
+                Small
+              </option>
+              <option value="<medium>">
+                Medium
+              </option>
+              <option value="large">
+                Large
+              </option>
+            </select>
+            <br />
+          </div>
+          <div id="leafshapediv">
+            <label for="leaf_shape">
+              Leaf Shape:
+            </label>
+            <br />
+            <select id="leaf_shape" name="leaf_shape">
+              <option value="rounded" selected>
+                Rounded
+              </option>
+              <option value="pointy">
+                Pointy
+              </option>
+              <option value="divided">
+                Divided
+              </option>
+            </select>
+            <br />
+          </div>
+          <div id="barkcolordiv">
+            <label for="bark_colour">
+              Bark Colour:
+            </label>
+            <br />
+            <select id="bark_colour" name="bark_colour">
+              <option value="grey" selected>
+                Grey
+              </option>
+              <option value="red">
+                Red
+              </option>
+              <option value="silver">
+                Silver
+              </option>
+              <option value="Brown">
+                Brown
+              </option>
+            </select>
+            <br />
+          </div>
+          <div id="barktexturediv">
+            <label for="bark_texture">
+              Bark Texture:
+            </label>
+            <br />
+            <select id="bark_texture" name="bark_texture">
+              <option value="smooth" selected>
+                Smooth
+              </option>
+              <option value="peeling">
+                Peeling
+              </option>
+              <option value="crinkles">
+                Crinkles
+              </option>
+              <option value="furry">
+                Furry
+              </option>
+              <option value="spotty">
+                Spotty
+              </option>
+            </select>
+            <br />
+          </div>
+          <input type="submit" />
+          <br />
+        </div>
       </form>
     </script>
+
     <script id="formerror" type="text/x-handlebars-template">
       <h3>
         Please Fix these errors

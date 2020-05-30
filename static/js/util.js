@@ -15,7 +15,8 @@ function split_hash(hash) {
   }
 }
 
-//From Stack overflow, Want to prevent shallow copies of data if I plan to manipulate the Model data
+//From Stack overflow, Want to prevent shallow copies of data if
+//I plan to manipulate the Model data
 function copy(obj) {
   if (obj !== null) {
     const copy = Object.create(Object.getPrototypeOf(obj));
